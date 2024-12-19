@@ -5,7 +5,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,182 +36,102 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningKotlinTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Halo(Modifier.padding(innerPadding))
+                Surface (color = Color.White)
+                {
+                    /*Column*/
+                    Column(modifier = Modifier
+                        .height(500.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+
+                        CustomItem(weight = 3f, color = Color.Magenta)
+                        CustomItem(weight = 1f)
+                    }
+
+                    Column(modifier = Modifier
+                        .height(500.dp).background(Color.White),
+                        verticalArrangement = Arrangement.SpaceEvenly) {
+                        /* Row */
+                        Row(horizontalArrangement = Arrangement.Center) {
+
+                            RowItem(weight = 1f, color = Color.Gray)
+                            RowItem(weight = 2f, color = Color.Blue)
+                        }
+
+                        /* Row */
+                        Row(horizontalArrangement = Arrangement.Center) {
+
+                            RowItem(weight = 1f, color = Color.Gray)
+                            RowItem(weight = 2f, color = Color.Green)
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+
+
+
+//Bab Column dan Row
+
+//saat membuat function composable jika kita ingin mencantumkan attribute yang hanya dimiliki oleh child column/row => ColumnScrope/RowScope
+//parameter Composable => name:dataType = defaultValue (optional)
+@Composable
+fun ColumnScope.CustomItem(weight: Float, color: Color = Color.Green) {
+    Surface(modifier = Modifier
+        .width(200.dp)
+        .weight(weight),
+        color = color) {}
 }
 
 @Composable
-fun Halo(modifier: Modifier = Modifier) {
-    Column {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-
-            /* Column 1 */
-            Column(modifier = Modifier
-                .align(Alignment.Start)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.LightGray) {
-
-                    Text(text = "Hello")
-                }
-            }
-
-            /*Column 2*/
-            Column(modifier = Modifier
-                .padding(top = 10.dp)
-                .align(Alignment.CenterHorizontally)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.Blue) {
-                    Text(text = "Hola",
-                        color = Color.White)
-                }
-            }
-
-            /* Column 3 */
-            Column(modifier = Modifier
-                .padding(top = 10.dp)
-                .align(Alignment.End)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.Yellow) {
-                    Text(text = "Whatsupp bro",
-                        color = Color.Gray)
-                }
-            }
-
-            /* Column 3 */
-            Column(modifier = Modifier
-                .padding(top = 10.dp)
-                .align(AbsoluteAlignment.Left)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.Cyan) {
-                    Text(text = "Hmmm",
-                        color = Color.Gray)
-                }
-            }
-
-            /* Column 4 */
-            Column(modifier = Modifier
-                .padding(top = 10.dp)
-                .align(AbsoluteAlignment.Right)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.Magenta) {
-                    Text(text = "Waduh",
-                        color = Color.Gray)
-                }
-            }
-
-
-        }
-    }
+fun RowScope.RowItem(weight: Float, color: Color = Color.Green) {
+    Surface(modifier = Modifier
+        .width(50.dp)
+        .height(50.dp)
+        .weight(weight),
+        color = color) {}
 }
-
 
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-        /*Parent layout (column/row => horizontalAlignment/verticalArrangement)
-        * Child layout (column/row => Modifier = modifier.Align(Alignment.value)) */
-        // verticalScroll => Allow vertical scroll if contents is overflow, the argument is (rememberScrollState())
+fun ColumnLearning() {
+    /*Parent layout (column/row => horizontalAlignment/verticalArrangement bisa juga horizontalArrangement/verticalAlignment)
+    * Child layout (column/row => Modifier = modifier.Align(Alignment.value)) */
+    // verticalScroll => Allow vertical scroll if contents is overflow, the argument is (rememberScrollState())
 
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+    /*Column*/
+    Column(modifier = Modifier
+        .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally) {
 
-            /* Column 1 */
-            Column(modifier = Modifier
-                .align(Alignment.Start)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.LightGray) {
-
-                    Text(text = "Hello")
-                }
-            }
-
-            /*Column 2*/
-            Column(modifier = Modifier
-                .padding(top = 10.dp)
-                .align(Alignment.CenterHorizontally)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.Blue) {
-                    Text(text = "Hola",
-                        color = Color.White)
-                }
-            }
-
-            /* Column 3 */
-            Column(modifier = Modifier
-                .padding(top = 10.dp)
-                .align(Alignment.End)) {
-                Surface(modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp),
-                    color = Color.Yellow) {
-                    Text(text = "What'supp bro",
-                        color = Color.Gray)
-                }
-            }
-
-            //on working
-//            /* Column 3 */
-//            Column(modifier = Modifier
-//                .padding(top = 10.dp)
-//                .align(AbsoluteAlignment.Left)) {
-//                Surface(modifier = Modifier
-//                    .width(200.dp)
-//                    .height(200.dp),
-//                    color = Color.Cyan) {
-//                    Text(text = "Hmmm",
-//                        color = Color.Gray)
-//                }
-//            }
-
-//            /* Column 4 */
-//            Column(modifier = Modifier
-//                .padding(top = 10.dp)
-//                .align(AbsoluteAlignment.Right)) {
-//                Surface(modifier = Modifier
-//                    .width(200.dp)
-//                    .height(200.dp),
-//                    color = Color.Magenta) {
-//                    Text(text = "Waduh",
-//                        color = Color.Gray)
-//                }
-//            }
-//
-//            /* Column 5 */
-//            Column(modifier = Modifier
-//                .padding(top = 10.dp)
-//                .align(Alignment.CenterHorizontally)) {
-//                Surface(modifier = Modifier
-//                    .width(200.dp)
-//                    .height(200.dp),
-//                    color = Color.Magenta) {
-//                    Text(text = "Waduh",
-//                        color = Color.Gray)
-//                }
-//            }
-        }
-
+        CustomItem(weight = 3f, color = Color.Magenta)
+        CustomItem(weight = 1f)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RowLearning() {
+
+        /*Column pembungkus*/
+    Column(modifier = Modifier
+        .height(500.dp).background(Color.White),
+        verticalArrangement = Arrangement.SpaceEvenly) {
+            /* Row */
+            Row(horizontalArrangement = Arrangement.Center) {
+
+                RowItem(weight = 1f, color = Color.Gray)
+                RowItem(weight = 2f, color = Color.Blue)
+            }
+
+            /* Row */
+            Row(horizontalArrangement = Arrangement.Center) {
+
+                RowItem(weight = 1f, color = Color.Gray)
+                RowItem(weight = 2f, color = Color.Green)
+            }
+    }
+}
