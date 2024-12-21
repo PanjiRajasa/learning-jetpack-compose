@@ -7,12 +7,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -29,6 +31,8 @@ import com.example.learningkotlin.ui.theme.LearningKotlinTheme
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,39 +40,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningKotlinTheme {
-                Surface (color = Color.White)
+                Surface(modifier = Modifier
+                    .fillMaxSize(),
+                    color = MaterialTheme
+                        .colorScheme.background)
                 {
-                    /*Column*/
-                    Column(modifier = Modifier
-                        .height(500.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
 
-                        CustomItem(weight = 3f, color = Color.Magenta)
-                        CustomItem(weight = 1f)
-                    }
-
-                    Column(modifier = Modifier
-                        .height(500.dp).background(Color.White),
-                        verticalArrangement = Arrangement.SpaceEvenly) {
-                        /* Row */
-                        Row(horizontalArrangement = Arrangement.Center) {
-
-                            RowItem(weight = 1f, color = Color.Gray)
-                            RowItem(weight = 2f, color = Color.Blue)
-                        }
-
-                        /* Row */
-                        Row(horizontalArrangement = Arrangement.Center) {
-
-                            RowItem(weight = 1f, color = Color.Gray)
-                            RowItem(weight = 2f, color = Color.Green)
-                        }
                     }
                 }
             }
         }
     }
-}
 
 
 
@@ -133,5 +115,25 @@ fun RowLearning() {
                 RowItem(weight = 1f, color = Color.Gray)
                 RowItem(weight = 2f, color = Color.Green)
             }
+    }
+}
+
+/*Note: Box != layout, it's a container => The padding works for distance between its children, not for distance between containers. It is different from Column and Row due to they are layouts*/
+@Preview
+@Composable
+fun BoxLearning() {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White),
+        contentAlignment = Alignment.Center) {
+
+        Box(modifier = Modifier
+            .background(Color.Cyan)
+            .padding(10.dp)
+            .verticalScroll(rememberScrollState()),
+            contentAlignment = Alignment.Center) {
+            
+            Text(text = "I like mobile development!", fontSize = 50.sp)
+        }
     }
 }
